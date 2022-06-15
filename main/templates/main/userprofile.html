@@ -1,0 +1,99 @@
+{% extends 'base.html'%}
+{% block title%} my homepage {% endblock %}
+{% block content %}
+<div class="row">
+
+    <div class="col-sm-6">
+
+
+        <h5 class="card-title">
+            UserID: {{user.id}}
+
+        </h5>
+        <p class="card-text">
+
+            {%if user.is_reader%}
+            user type: reader
+            {%else%}
+            user type: poster
+            {%endif%}
+        </p>
+        <h5 class="card-title">Username:{{user.username}}</h5>
+        {%if user.first_name and user.last_name%}
+        <h5 class="card-title">FirtName: {{user.first_name}} LastName:{{user.last_name}}</h5>
+        {%endif%}
+
+
+        <p>
+            <a href="{% url 'delete-profile' user.id %}" class="btn btn-primary">delete profile</a>
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                aria-expanded="false" aria-controls="collapseExample">
+                Update profile
+            </button>
+        </p>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                <form id="form" method="POST">
+                    {%csrf_token%}
+                    <label for="">Update email: {{user.email}}</label>
+                    <input type="email" name="update-email">
+                    <input type="submit" value="Update Email">
+
+                </form>
+                <hr>
+                <form id="form" method="POST">
+                    {%csrf_token%}
+                    <label for="">Update Password</label>
+                    <input type="password" name="update-password">
+                    <input type="submit" value="Update Password">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        {%if user.avatar.url is not None%}
+        <img src="{{user.avatar.url}}" alt="userAvatar" width="150">
+        {% endif %}
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-sm-6">
+        <h3 class="card-title"> My favorite reads</h3>
+        <ul>
+            {% for post in posts %}
+            <li>
+                <p class="card-text"><a href="{%url 'detail' post.id %}">
+                        {{post.title}}
+                    </a>
+
+                </p>
+                <a class="btn btn-outline-success" href="{% url 'addfavor' post.id%}" class="btn btn-primary">Remove</a>
+            </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+
+
+    <div class="col-sm-6">
+        {% if user.is_poster %}
+        <h3>My Posts
+            <ul>
+                {%for post in created_posts%}
+                <li>{{post.title}}</li>
+                <a href="#" class="btn btn-primary">View and Modify</a>
+                <a href="{%url 'delete-post' post.id %}" class="btn btn-primary">Delete</a>
+                {%endfor%}
+            </ul>
+
+            <a href="{% url 'newpost' user.id %}">Create a New Post</a>
+            Add New Post
+            </a>
+
+        </h3>
+        {% endif %}
+    </div>
+</div>
+{%endblock%}

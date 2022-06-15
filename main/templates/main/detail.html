@@ -1,0 +1,13 @@
+{% extends 'base.html'%}
+{% block title%} my reads {% endblock %}
+{% block content %}
+<h3>{{post.title}}</h3>
+<Details>
+    {{post.description}}
+</Details>
+{%if fav%}
+<a href="{% url 'addfavor' post.id%}" class="btn btn-primary">RemovefromFavorite</a>
+{%else%}
+<a href="{% url 'addfavor' post.id%}" class="btn btn-primary">AddtoFavorite</a>
+{%endif%}
+{%endblock%}

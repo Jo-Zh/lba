@@ -1,0 +1,22 @@
+{% extends 'base.html'%}
+{% block title%} Login {% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <h1>Login Form</h1>
+    <hr />
+    {%if messages%}
+    {%for message in messages%}
+    <p>{{message}}</p>
+    {%endfor%}
+    {%endif%}
+    <form method="POST">
+        {%csrf_token%}
+        {{ form.as_p}}
+        <p> Don't have account? Create one <a href="/sign-up"> here</a>.</p>
+        <p> Forget your password? <a href="/password_reset/">reset here</a>.</p>
+        <button type="submit" class="btn btn-secondary btn-sm">Log In</button>
+    </form>
+
+</div>
+
+{%endblock%}
