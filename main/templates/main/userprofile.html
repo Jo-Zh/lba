@@ -5,7 +5,6 @@
 
     <div class="col-sm-6">
 
-
         <h5 class="card-title">
             UserID: {{user.id}}
 
@@ -25,30 +24,11 @@
 
 
         <p>
-            <a href="{% url 'delete-profile' user.id %}" class="btn btn-primary">delete profile</a>
-            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-                aria-expanded="false" aria-controls="collapseExample">
-                Update profile
-            </button>
-        </p>
-        <div class="collapse" id="collapseExample">
-            <div class="card card-body">
-                <form id="form" method="POST">
-                    {%csrf_token%}
-                    <label for="">Update email: {{user.email}}</label>
-                    <input type="email" name="update-email">
-                    <input type="submit" value="Update Email">
+            <a href="{% url 'delete-profile' user.id %}" class="card-link">delete profile</a>
+            <a href="{% url 'update-profile' user.id %}" class="card-link">update profile</a>
 
-                </form>
-                <hr>
-                <form id="form" method="POST">
-                    {%csrf_token%}
-                    <label for="">Update Password</label>
-                    <input type="password" name="update-password">
-                    <input type="submit" value="Update Password">
-                </form>
-            </div>
-        </div>
+        </p>
+
     </div>
     <div class="col-sm-6">
         {%if user.avatar.url is not None%}
@@ -68,7 +48,7 @@
                     </a>
 
                 </p>
-                <a class="btn btn-outline-success" href="{% url 'addfavor' post.id%}" class="btn btn-primary">Remove</a>
+                <a class="btn btn-small btn-outline-success " href="{% url 'addfavor' post.id%}">Remove</a>
             </li>
             {% endfor %}
         </ul>
@@ -80,19 +60,24 @@
     <div class="col-sm-6">
         {% if user.is_poster %}
         <h3>My Posts
-            <ul>
-                {%for post in created_posts%}
-                <li>{{post.title}}</li>
-                <a href="#" class="btn btn-primary">View and Modify</a>
-                <a href="{%url 'delete-post' post.id %}" class="btn btn-primary">Delete</a>
-                {%endfor%}
-            </ul>
-
-            <a href="{% url 'newpost' user.id %}">Create a New Post</a>
-            Add New Post
-            </a>
-
         </h3>
+        Add New Post <a href="{% url 'newpost' user.id %}">here</a>
+        <ul>
+            {%for post in created_posts%}
+            <li>{{post.title}}</li>
+            <a href="{%url 'updatepost' post.pk %}" class="card-link"><small>View and Modify</small> </a>
+            <a href="{%url 'delete-post' post.id %}" class="card-link"><small>Delete</small></a>
+            {%if post.set_public%}
+            <a class="card-link active" href="{%url 'post-status' post.id %}" class="card-link"><small>Draft</small></a>
+            {%else%}
+            <a href="{%url 'post-status' post.id %}" class="card-link"><small>Public</small></a>
+            {%endif%}
+            {%endfor%}
+        </ul>
+
+
+        </a>
+
         {% endif %}
     </div>
 </div>

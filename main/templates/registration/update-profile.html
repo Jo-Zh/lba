@@ -1,0 +1,27 @@
+{% extends 'base.html'%}
+{% block title%} Sign Up {% endblock %}
+{% block content %}
+
+<div>
+    <h1>Update user's detail</h1>
+    <hr />
+    {%if messages%}
+    {%for message in messages%}
+    <h4 class="message">{{message}}</h4>
+    {%endfor%}
+    {%endif%}
+    <form method="POST" enctype="multipart/form-data" class="form-control">
+        {%csrf_token%}
+        {{ form.as_p}}
+        <a class="card-link mx-5" href="{% url 'userprofile' user.id %}"> Cancle</a>
+        <button type="submit" class="btn btn-outline-primary btn-sm mx-auto">Update Profile</button>
+
+    </form>
+    {%if messages%}
+    {%for message in messages%}
+    <h4 class="message">{{message}}</h4>
+    {%endfor%}
+    {%endif%}
+
+</div>
+{%endblock%}

@@ -2,8 +2,9 @@
 {% block title%} my homepage {% endblock %}
 {% block content %}
 Here create new post
-<form class="form" method="POST" enctype="multipart/form-data">
+<form class="form-control" method="POST" enctype="multipart/form-data">
     {%csrf_token%}
+    {{form.media}}
     {{ form.as_p}}
     <button type="submit">Save</button>
 </form>

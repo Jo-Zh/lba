@@ -1,0 +1,12 @@
+{% extends 'base.html'%}
+{% block title%} my homepage {% endblock %}
+{% block content %}
+<form class="form-control" method="POST">
+    Add Comments
+    {%csrf_token%}
+
+    {{ form.as_p}}
+    <button type="submit" name="comment">Submit</button>
+</form>
+
+{%endblock%}

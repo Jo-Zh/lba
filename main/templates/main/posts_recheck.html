@@ -1,9 +1,0 @@
-{% extends 'base.html'%}
-{% block title%} my homepage {% endblock %}
-{% block content %}
-Here show user posts:
-{%for post in current_posts %}
-<div>{{post.title}}</div>
-{%endfor%}
-<a href="{% url 'newpost' user.id %}">Create a New Post</a>
-{%endblock%}

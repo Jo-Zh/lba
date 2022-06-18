@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main.apps.MainConfig',
+    'my_service.apps.MyServiceConfig',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -129,8 +131,73 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'main.User'
 LOGIN_REDIRECT_URL='/home'
-LOGOUT_REDIRECT_URL='/login'
+LOGOUT_REDIRECT_URL='/accounts/login'
 
-# django_project/settings.py
+
+# Reset password
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
+
+#create log file
+LOG_PATH = 'log/my_service'
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'file': {
+#             'level': 'DEBUG',
+#             'class': 'logging.FileHandler',
+#             'filename': 'log/my_service/debug.log',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['file'],
+#             'level': 'DEBUG',
+#             'propagate': True,
+#         },
+#     },
+# }
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': "[%(asctime)s] %(levelname)s [%(filename)s:%(lineno)s] %(message)s",
+            'datefmt': "%Y/%b/%d %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+  
+    'handlers': {
+        'django': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(str(LOG_PATH), 'django.log'),
+            'maxBytes': 1024 * 1024 * 10,
+            'backupCount': 10,
+            'formatter': 'verbose',
+        },
+        'user': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(str(LOG_PATH), 'user.log'),
+            'maxBytes': 1024 * 1024 * 10,
+            'backupCount': 10,
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['django'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),
+        },
+        'user': {
+            'handlers': ['user'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+        },
+    },
+}
