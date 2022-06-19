@@ -1,8 +1,10 @@
+import unittest
+from django.test import Client
 from django.test import TestCase
-from .models import Posts, User
+from .models import Posts, User, Comments, Notes, Category
 # Create your tests here.
 
-#models
+#Test models
 class PostsModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -16,8 +18,6 @@ class PostsModelTest(TestCase):
 
 
 # test GET POST responses on URL
-import unittest
-from django.test import Client
 
 # HomePage
 class SimpleTest(unittest.TestCase):
