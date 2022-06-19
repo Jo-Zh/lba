@@ -1,5 +1,5 @@
 """
-ASGI config for ela project.
+ASGI config for lba project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ela.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lba.settings')
 
 application = get_asgi_application()
