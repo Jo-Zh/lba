@@ -142,24 +142,6 @@ EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 
 #create log file
 LOG_PATH = 'log/my_service'
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'handlers': {
-#         'file': {
-#             'level': 'DEBUG',
-#             'class': 'logging.FileHandler',
-#             'filename': 'log/my_service/debug.log',
-#         },
-#     },
-#     'loggers': {
-#         'django': {
-#             'handlers': ['file'],
-#             'level': 'DEBUG',
-#             'propagate': True,
-#         },
-#     },
-# }
 
 LOGGING = {
     'version': 1,
