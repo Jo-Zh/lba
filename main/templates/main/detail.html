@@ -2,23 +2,25 @@
 {% block title%} my reads {% endblock %}
 {% block content %}
 <div class="row m-5">
-    <div class="col-md-8 blog-main">
-        <p class="text-end">
+    <div class="col-md-8 blog-main" style="background-color: #dedede; color:#343232">
+        <p class="text-end">{{num}}
             {%if fav%}
-            <a href="{% url 'addfavor' post.id%}" class="btn btn-primary btn-small">RemovefromFavorite</a>
+            <a href="{% url 'addfavor' post.id%}" class="btn btn-outline-primary btn-small"><i
+                    class="bi bi-star-fill"></i>liked</a>
             {%else%}
-            <a href="{% url 'addfavor' post.id%}" class="btn btn-primary btn-small">AddtoFavorite</a>
+            <a href="{% url 'addfavor' post.id%}" class="btn btn-outline-primary btn-small"><i class="bi bi-star">
+                </i></a>
             {%endif%}
-            <span>{{num}} adding Favorite</span>
         </p>
-        <div class="blog-post">
-            <h2 class="blog-post-title">{{post.title}}</h2>
-            <p class="blog-post-meta">created on {{post.date | date:"D d M Y" }}by <a href="#">{{post.creater}}</a></p>
-            {% if post.cover.url != None %}
-            <img class="card-img-right flex-auto d-none d-md-block" style="width:400px" src="{{post.cover.url}}" alt="">
-            {%endif%}
-            <p>{{post.content | safe}}</p>
-        </div>
+
+        <h2 class="blog-post-title">{{post.title}}</h2>
+        <p class="blog-post-meta">created on {{post.date | date:"D d M Y" }}by <a
+                href="{% url 'userprofile' user.id %}">{{post.creater}}</a></p>
+        {% if post.cover.url != None %}
+        <img class="rounded mx-auto d-block" style="width:300px" src="{{post.cover.url}}" alt="">
+        {%endif%}
+        <p>{{post.content | safe}}</p>
+
     </div>
     <div class="col-md-3 text-dark rounded m-2" style="border-left: 2px solid rgb(161, 153, 153)">
         <p>
@@ -29,8 +31,6 @@
         </p>
         <div class="collapse" id="collapseExample1">
             <div class="card card-body">
-                Some placeholder content for the collapse component. This panel is hidden by default but revealed when
-                the user activates the relevant trigger.
                 <form method="POST" class="form-control">
                     {%csrf_token%}
                     <input class="form-control" type="text" name="note_tag" placeholder="Note type (default)">
@@ -44,15 +44,14 @@
         <p>
             <a class="btn btn-outline-primary btn-small" data-bs-toggle="collapse" href="#collapseExample2"
                 role="button" aria-expanded="false" aria-controls="collapseExample">
-                Note-Board
+                My-Note-Board
             </a>
 
         </p>
 
         <div class="collapse" id="collapseExample2">
             <div class="card card-body">
-                Some placeholder content for the collapse component. This panel is hidden by default but revealed when
-                the user activates the relevant trigger.
+
                 {%for note in notes%}
                 <div class="card-body bg-secondary text-light m-2 text-start">
                     <p>{{note.text}} on </p>
@@ -71,42 +70,52 @@
     </div>
 </div>
 <hr>
-<!-- <div class="row m-5"> -->
-<h4>Comment this post here... </h4>
+<div class="row m-5">
+    <h4>Comment this post here... </h4>
 
-<form method="POST">
-    Add Comments
-    {%csrf_token%}
-    {{ form.as_p}}
-    <button type="submit" name="comment">Submit</button>
-</form>
-
-
-{% for comment in comments %}
-<blockquote class="blockquote">
-    <p class="mb-0">{{comment.text}}</p>
-    <footer class="blockquote-footer">via {{comment.name}} | {{comment.date|timesince}} ago</footer>
-    {%for child_comment in comment.children%}
-    <blockquote class="blockquote">
-        <p class="mb-0">{{child_comment.text}}</p>
-        <footer class="blockquote-footer">via {{child_comment.name}} | {{child_comment.date|timesince}} ago</footer>
-    </blockquote>
-    {%endfor%}
-    <!-- <div class="card my-5" style="width: 80%; margin:auto; ">
-            <div class="card-body text-dark"> -->
     <form method="POST">
+        Add Comments
         {%csrf_token%}
         {{ form.as_p}}
-        <input type="hidden" name="parent_id" value="{{comment.id}}">
-        <input type="submit" value="reply" name="reply">
+        <button type="submit" name="comment">Submit</button>
     </form>
-    <!-- </div>
-        </div> -->
-</blockquote>
 
-{%empty%}
-No Comments at now...
-{%endfor%}
 
-<!-- </div> -->
+    {% for comment in comments %}
+    <blockquote class="blockquote">
+        <p class="lead">{{comment.text}}</p>
+        <footer class="blockquote-footer">via {{comment.name}} | {{comment.date|timesince}} ago</footer>
+        {%for child_comment in comment.children%}
+        <blockquote class="blockquote" style="text-indent: 50px;">
+            <p class="lead">{{child_comment.text}}</p>
+            <footer class="blockquote-footer">via {{child_comment.name}} | {{child_comment.date|timesince}} ago</footer>
+        </blockquote>
+        {%endfor%}
+
+        <div class="dropdown show ">
+            <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Reply:
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <form method="POST">
+                    {%csrf_token%}
+                    {{ form.as_p}}
+                    <input type="hidden" name="parent_id" value="{{comment.id}}">
+                    <input type="submit" value="reply" name="reply">
+                </form>
+
+            </div>
+        </div>
+
+
+
+    </blockquote>
+
+    {%empty%}
+    No Comments at now...
+    {%endfor%}
+
+</div>
 {%endblock%}

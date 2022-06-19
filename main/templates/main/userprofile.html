@@ -1,84 +1,100 @@
 {% extends 'base.html'%}
 {% block title%} my homepage {% endblock %}
 {% block content %}
-<div class="row">
+<div class="d-flex flex-row g-4 m-5">
 
-    <div class="col-sm-6">
+    <div class="mx-5">
+        <div class="card" style="width: 18rem;">
+            <div class="d-flex me-4 align-items-center" style="height:120px; width:120px">
 
-        <h5 class="card-title">
-            UserID: {{user.id}}
+                {%if user.avatar.url is not None%}
+                <img src="{{user.avatar.url}}" alt="userAvatar" width="150">
+                {%else%}
+                {% load static %}
+                <img style="width: 100%" src="{% static 'main/avatar-user.png' %}" alt="user">
+                {% endif %}
+            </div>
 
-        </h5>
-        <p class="card-text">
+            <div class=" card-body h-100">
 
-            {%if user.is_reader%}
-            user type: reader
-            {%else%}
-            user type: poster
-            {%endif%}
-        </p>
-        <h5 class="card-title">Username:{{user.username}}</h5>
-        {%if user.first_name and user.last_name%}
-        <h5 class="card-title">FirtName: {{user.first_name}} LastName:{{user.last_name}}</h5>
-        {%endif%}
+                <h5 class="card-title">
+                    UserID: {{user.id}}
+
+                </h5>
+                <p class="card-text">
+
+                    {%if user.is_reader%}
+                    user type: reader
+                    {%else%}
+                    user type: poster
+                    {%endif%}
+                </p>
+                <h5 class="card-title">Username:{{user.username}}</h5>
+                {%if user.first_name and user.last_name%}
+                <h5 class="card-title">FirtName: {{user.first_name}} </h5>
+                <h5 class="card-title"> LastName:{{user.last_name}}</h5>
+                {%endif%}
 
 
-        <p>
-            <a href="{% url 'delete-profile' user.id %}" class="card-link">delete profile</a>
-            <a href="{% url 'update-profile' user.id %}" class="card-link">update profile</a>
-
-        </p>
+                <p>
+                    <a href="{% url 'delete-profile' user.id %}" class="card-link">delete profile</a>
+                    <a href="{% url 'update-profile' user.id %}" class="card-link">update profile</a>
+                </p>
+                <a class="btn btn-outline-primary btn-small" href="{% url 'newpost' user.id %}">Create A New Post</a>
+            </div>
+        </div>
 
     </div>
-    <div class="col-sm-6">
-        {%if user.avatar.url is not None%}
-        <img src="{{user.avatar.url}}" alt="userAvatar" width="150">
-        {% endif %}
+
+
+
+
+    <div class="d-flex flex-column border-start border-4 w-100">
+        <div class="m-5">
+            <h3 class="text-center text-uppercase fw-bold"> My favorite reads</h3>
+            <ul class="fs-5">
+                {% for post in posts %}
+                <li>
+                    <p class="card-text">
+                        <a class="card-link " href="{%url 'detail' post.id %}">{{post.title}}</a>
+                        created on {{post.date | date:"D d M Y"}} |
+                        <a class="card-link " href="{% url 'addfavor' post.id%}"> Remove</a>
+                    </p>
+                </li>
+                {% endfor %}
+            </ul>
+
+        </div>
+
+        <div class="m-5">
+            {% if user.is_poster %}
+            <h3 class="text-center text-uppercase fw-bold">My Articles</h3>
+
+            <ul class="fs-5">
+                {%for post in created_posts%}
+                <li>{{post.title}} created on {{post.date | date:"D d M Y"}} |
+
+                    <a class="card-link " href="{%url 'updatepost' post.pk %}" class="card-link"><small>View and
+                            Modify</small> </a> |
+                    <a class="card-link " href="{%url 'delete-post' post.id %}"
+                        class="card-link"><small>Delete</small></a> |
+                    {%if post.set_public%}
+                    <a class="card-link active" href="{%url 'post-status' post.id %}"
+                        class="card-link"><small>Draft</small></a>
+                    {%else%}
+                    <a href="{%url 'post-status' post.id %}" class="card-link"><small>Public</small></a>
+                    {%endif%}
+                    {%endfor%}
+                </li>
+            </ul>
+
+
+            </a>
+
+            {% endif %}
+        </div>
     </div>
 </div>
-<hr>
-<div class="row">
-    <div class="col-sm-6">
-        <h3 class="card-title"> My favorite reads</h3>
-        <ul>
-            {% for post in posts %}
-            <li>
-                <p class="card-text"><a href="{%url 'detail' post.id %}">
-                        {{post.title}}
-                    </a>
 
-                </p>
-                <a class="btn btn-small btn-outline-success " href="{% url 'addfavor' post.id%}">Remove</a>
-            </li>
-            {% endfor %}
-        </ul>
-
-    </div>
-
-
-
-    <div class="col-sm-6">
-        {% if user.is_poster %}
-        <h3>My Posts
-        </h3>
-        Add New Post <a href="{% url 'newpost' user.id %}">here</a>
-        <ul>
-            {%for post in created_posts%}
-            <li>{{post.title}}</li>
-            <a href="{%url 'updatepost' post.pk %}" class="card-link"><small>View and Modify</small> </a>
-            <a href="{%url 'delete-post' post.id %}" class="card-link"><small>Delete</small></a>
-            {%if post.set_public%}
-            <a class="card-link active" href="{%url 'post-status' post.id %}" class="card-link"><small>Draft</small></a>
-            {%else%}
-            <a href="{%url 'post-status' post.id %}" class="card-link"><small>Public</small></a>
-            {%endif%}
-            {%endfor%}
-        </ul>
-
-
-        </a>
-
-        {% endif %}
-    </div>
 </div>
 {%endblock%}
