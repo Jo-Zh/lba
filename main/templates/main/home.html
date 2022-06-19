@@ -1,8 +1,10 @@
 {% extends 'base.html'%}
 {% block title%} my homepage {% endblock %}
 {% block content %}
+<div class="row text-center py-3">
 
-<h3 class="text-light">Explore online learning resource here... </h3>
+    <h1>Explore and Sharing learning experience here... </h1>
+</div>
 <div class="flex-spacebetween bg-light">
     <form role="search" method="POST" class="form-group bg-light">
         {%csrf_token%}
@@ -12,7 +14,7 @@
             <label class="text-dark" for="floatingSelectGrid">in field</label>
             <select class="rounded mx-2" name="field" id="floatingSelectGrid">
                 <option value="title">title</option>
-                <option value="description" selected>description</option>
+                <option value="content" selected>content</option>
                 <option value="writer">poster</option>
             </select>
 
@@ -25,7 +27,9 @@
     <div class="dropdown show ">
         <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Selected by category :
+            <!-- <i class="bi bi-arrow-down-up">Sorted by category :</i> -->
+            <span class="bi bi-funnel">Filter by:</span>
+
         </a>
 
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -39,30 +43,37 @@
     </div>
 </div>
 
-<div class="container-fluid px-4 my-2">
-    <div class="row gx-4">
+<div class="container-fluid px-4 my-4">
+    <div class="row g-4 ">
 
         {% for post in posts %}
         {% if post.set_public%}
-        <div class="col-md-4 ">
-            <div class="card flex-md-row mb-4 box-shadow h-md-250 ">
-                <div class="card-body d-flex flex-column align-items-start" height="150">
-                    <strong class="d-inline-block mb-2 text-primary">{{post.category}}</strong>
-                    <h3 class="mb-0">
-                        <a class="text-dark" href="#">Featured post</a>
-                    </h3>
-                    <div class="mb-1 text-muted">{{post.date}} by {{post.creater}}</div>
-                    <p class="card-text " style="overflow: hidden; height: 50px;"> {{post.content | safe}}</p>
-                    <a href="{%url 'detail' post.id %}">Continue reading</a>
+        <div class="col-md-4">
+            <div class="card box-shadow d-flex flex-row p-0 align-items-center h-100">
+
+                <div class=" card-body d-flex flex-column align-items-start m-0 h-100">
+
+                    <p class="bi bi-tag">{{post.category}}</p>
+
+                    <!-- <h5 class="mt-0 text-primary">Category: {{post.category}}</h5> -->
+                    <blockquote class="blockquote mb-0">
+                        <p class="fw-bold lead fs-4">
+                            {{post.title}}
+                        </p>
+                        <footer class="blockquote-footer">{{post.date}} by {{post.creater}}</footer>
+                    </blockquote>
+                    <p class="lh-sm lead"> {{post.content | safe | truncatechars:100}}</p>
+                    <a class="card-link" href="{%url 'detail' post.id %}">Continue reading</a>
                 </div>
-                {% if post.cover.url != None %}
-                <img class="card-img-right flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb"
-                    alt="Thumbnail [200x250]" style="width: 200px; height: 250px;" src="{{post.cover.url}}"
-                    data-holder-rendered="true">
-                {%else%}
-                <img class="card-img-right flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb"
-                    alt="Thumbnail [200x250]" style="width: 100%; height:100%;" src="..." data-holder-rendered="true">
-                {%endif%}
+                <div class="d-flex me-4 align-items-center" style="height:250px; width:200px">
+
+                    {% if post.cover.url != None %}
+                    <img alt="Thumbnail [200x250]" style="width: 100%" src="{{post.cover.url}}"
+                        data-holder-rendered="true">
+                    {%else%}
+                    <img class="" alt="Thumbnail [200x250]" style="width: 100%" src="..." data-holder-rendered="true">
+                    {%endif%}
+                </div>
 
             </div>
         </div>

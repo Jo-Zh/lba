@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
     'my_service.apps.MyServiceConfig',
     'ckeditor',
+    'django_static_fontawesome'
 ]
 
 MIDDLEWARE = [
