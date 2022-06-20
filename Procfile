@@ -1,0 +1,1 @@
+web: gunicorn lba.wsgi --log-file -
