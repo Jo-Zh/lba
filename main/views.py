@@ -43,8 +43,9 @@ def sign_up_reader(req):
             user=form.save()
             login(req, user)
             return redirect('/home')
+        else:
+            messages.info(req, 'Invalid Input.')
     else:
-        messages.info(req, 'Invalid Input.')
         form=Reader_Register_Form()    
     return render(req, 'registration/signup_reader.html', {'form':form})
 
@@ -56,8 +57,9 @@ def sign_up_poster(req):
             user=form.save()
             login(req, user)
             return redirect('/home')
+        else:
+            messages.info(req, 'Invalid Input.')
     else:
-        messages.info(req, 'Invalid Input.')
         form=Poster_Register_Form()    
     return render(req, 'registration/signup_writer.html', {'form':form})
 
