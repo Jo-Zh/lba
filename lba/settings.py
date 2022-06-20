@@ -160,14 +160,6 @@ LOGGING = {
     },
   
     'handlers': {
-        'django': {
-            'level': 'DEBUG',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(str(LOG_PATH), 'django.log'),
-            'maxBytes': 1024 * 1024 * 10,
-            'backupCount': 10,
-            'formatter': 'verbose',
-        },
         'user': {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
@@ -178,10 +170,6 @@ LOGGING = {
         },
     },
     'loggers': {
-        'django': {
-            'handlers': ['django'],
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),
-        },
         'user': {
             'handlers': ['user'],
             'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
