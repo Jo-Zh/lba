@@ -14,8 +14,14 @@
         </p>
 
         <h2 class="blog-post-title">{{post.title}}</h2>
-        <p class="blog-post-meta">created on {{post.date | date:"D d M Y" }}by <a
-                href="{% url 'userprofile' user.id %}">{{post.creater}}</a></p>
+        <p class="blog-post-meta">created on {{post.date | date:"D d M Y" }} by
+            {%if user.is_authenticated%}
+            <a href="{% url 'userprofile' user.id %}">{{post.creater}}</a>
+
+            {%else%}
+            <a href="{% url 'login'%}">{{post.creater}}</a>
+            {%endif%}
+        </p>
         {% if post.cover.url != None %}
         <img class="rounded mx-auto d-block" style="width:300px" src="{{post.cover.url}}" alt="">
         {%endif%}
@@ -23,6 +29,8 @@
 
     </div>
     <div class="col-md-3 text-dark rounded m-2" style="border-left: 2px solid rgb(161, 153, 153)">
+        Here is my study notes:
+        {%if user.is_authenticated%}
         <p>
             <a class="btn btn-outline-primary btn-small" data-bs-toggle="collapse" href="#collapseExample1"
                 role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -46,7 +54,6 @@
                 role="button" aria-expanded="false" aria-controls="collapseExample">
                 My-Note-Board
             </a>
-
         </p>
 
         <div class="collapse" id="collapseExample2">
@@ -65,12 +72,14 @@
                 </div>
             </div>
         </div>
-
-
+        {%else%}
+        <h5>To use notesboard, please log in.</h5>
+        {%endif%}
     </div>
 </div>
 <hr>
 <div class="row m-5">
+    {%if user.is_authenticated%}
     <h4>Comment this post here... </h4>
 
     <form method="POST">
@@ -80,7 +89,6 @@
         <button type="submit" name="comment">Submit</button>
     </form>
 
-
     {% for comment in comments %}
     <blockquote class="blockquote">
         <p class="lead">{{comment.text}}</p>
@@ -88,12 +96,27 @@
         {%for child_comment in comment.children%}
         <blockquote class="blockquote" style="text-indent: 50px;">
             <p class="lead">{{child_comment.text}}</p>
-            <footer class="blockquote-footer">via {{child_comment.name}} | {{child_comment.date|timesince}} ago</footer>
+            <footer class="blockquote-footer">via {{child_comment.name}} | {{child_comment.date|timesince}} ago |
+                <div class="dropdown d-inline-block">
+                    <a class="card-link " href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">Reply:
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <form method="POST">
+                            {%csrf_token%}
+                            {{ form.as_p}}
+                            <input type="hidden" name="parent_id" value="{{child_comment.id}}">
+                            <input type="submit" value="reply" name="reply">
+                        </form>
+
+                    </div>
+            </footer>
         </blockquote>
         {%endfor%}
 
         <div class="dropdown show ">
-            <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+            <a class="card-link fw-bolder dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Reply:
             </a>
@@ -108,14 +131,14 @@
 
             </div>
         </div>
-
-
-
     </blockquote>
-
     {%empty%}
     No Comments at now...
     {%endfor%}
+
+    {%else%}
+    To comment this article, please log in.
+    {%endif%}
 
 </div>
 {%endblock%}

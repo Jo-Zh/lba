@@ -9,9 +9,7 @@ class User(AbstractUser):
     is_reader=models.BooleanField(default=False)
     is_poster=models.BooleanField(default=False)
     avatar=models.ImageField(upload_to='media', null=True, blank=True)
-    
-    
-    
+   
     def get_absolute_url(self):
         return reverse('userprofile', args=[self.id])
     
@@ -28,7 +26,6 @@ class Category(models.Model):
         return reverse('home_category', args=[self.slug])
 
 
-
 class Posts(models.Model):
     title=models.CharField(max_length=255)
     content=RichTextField(null=True, blank=True)
@@ -40,15 +37,15 @@ class Posts(models.Model):
     add_like= models.IntegerField(default=0, null=True)
     set_public=models.BooleanField(default=False)
     
-
     class Meta:
-        ordering=('date',)
+        ordering=('-date',)
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse('home')
+
 
 class CommentManager(models.Manager):
     def all(self):
@@ -60,6 +57,7 @@ class CommentManager(models.Manager):
         obj_id=instance.id
         qs=super(CommentManager, self).filter(content_type=content_type, object_id=obj_id)
         return qs
+
 
 class Comments(models.Model):
     post=models.ForeignKey(Posts, on_delete=models.CASCADE, related_name='comments_on')

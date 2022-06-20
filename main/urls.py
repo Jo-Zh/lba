@@ -12,9 +12,7 @@ urlpatterns=[
     path('user-delete/<int:id>/', views.user_delete, name='delete-profile'),
     path('user-passwordreset/<int:id>/', views.password_update, name='update-password'),
 
-
     path('detail/<int:id>/', views.article_detail, name='detail'),
-    # path('detail/<int:pk>/comments', views.Comments_view.as_view(), name='add-comments'),
     path('newpost/<int:id>/', views.new_post, name='newpost'),
     path('post-status/<int:id>/', views.article_status, name='post-status'),
     path('updatepost/<int:pk>/', views.PostUpdateView.as_view(), name='updatepost'),
