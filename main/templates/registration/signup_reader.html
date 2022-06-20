@@ -13,7 +13,7 @@
     <form method="POST" enctype="multipart/form-data">
         {%csrf_token%}
         {{ form.as_p}}
-        <p> Already have account? Click <a href="/login"> here</a>.</p>
+        <p> Already have account? Click <a href="{%url 'login'%}"> here</a>.</p>
         <button type="submit" class="btn btn-secondary btn-sm">SignUp as Reader</button>
 
     </form>
