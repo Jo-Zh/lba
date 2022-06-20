@@ -5,20 +5,19 @@
 
     <h1>Explore and Sharing learning experience here... </h1>
 </div>
-<div class="flex-spacebetween bg-light">
+<div class="d-flex flex-spacebetween bg-light">
     <form role="search" method="POST" class="form-group bg-light">
         {%csrf_token%}
         <div class="input-group input-group-sm">
-            <input type="text" name="search" class="text-dark mx-2 " placeholder="Search for "
+            <input type="text" name="search" class="text-dark my-1" placeholder="Search for "
                 aria-describedby="inputGroup-sizing-sm" />
-            <label class="text-dark" for="floatingSelectGrid">in field</label>
-            <select class="rounded mx-2" name="field" id="floatingSelectGrid">
+            <button type="submit" class="btn btn-outline-warning btn-sm my-1"><i class="bi bi-search"> IN</i></button>
+            <select class="rounded my-1 " name="field" id="floatingSelectGrid">
                 <option value="title">title</option>
                 <option value="content" selected>content</option>
                 <option value="writer">poster</option>
             </select>
 
-            <button type="submit" class="btn btn-outline-warning btn-sm"><i class="bi bi-search"> </i></button>
         </div>
     </form>
 
