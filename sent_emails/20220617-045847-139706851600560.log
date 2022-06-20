@@ -1,0 +1,25 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Password reset on 127.0.0.1:8000
+From: webmaster@localhost
+To: test@test.com
+Date: Fri, 17 Jun 2022 04:58:47 -0000
+Message-ID: <165544192753.26763.11121575820317488943@www.vostro.org>
+
+
+You're receiving this email because you requested a password reset for your user account at 127.0.0.1:8000.
+
+Please go to the following page and choose a new password:
+
+http://127.0.0.1:8000/accounts/reset/MQ/b75chz-f2de5ca5eeb7cdbeb77e0ce95784c66b/
+
+Your username, in case you’ve forgotten: Jo
+
+Thanks for using our site!
+
+The 127.0.0.1:8000 team
+
+
+
+-------------------------------------------------------------------------------
