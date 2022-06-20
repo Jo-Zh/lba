@@ -8,7 +8,7 @@
             <div class="d-flex me-4 align-items-center" style="height:120px; width:120px">
 
                 {%if user.avatar.url is not None%}
-                <img src="{{user.avatar.url}}" alt="userAvatar" width="150">
+                <img src="{{user.avatar.url}}" alt="userAvatar" style="width: 100%">
                 {%else%}
                 {% load static %}
                 <img style="width: 100%" src="{% static 'main/avatar-user.png' %}" alt="user">
