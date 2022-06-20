@@ -24,7 +24,6 @@ more-itertools==4.2.0
 mysql-connector-python==8.0.29
 Pillow==8.1.0
 psycopg2-binary==2.9.3
-ufw==0.36
 unattended-upgrades==0.1
 urllib3==1.25.8
 usb-creator==0.3.7
