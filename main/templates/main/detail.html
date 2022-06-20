@@ -79,7 +79,7 @@
 </div>
 <hr>
 <div class="row m-5">
-    {%if user.is_authenticated%}
+
     <div class="accordion-item">
         <h2 class="accordion-header " id="headingOne">
             <button class="accordion-button fs-3 fw-bold" type="button" data-bs-toggle="collapse"
@@ -143,9 +143,7 @@
         No Comments at now...
         {%endfor%}
 
-        {%else%}
-        To comment this article, please log in.
-        {%endif%}
+
     </div>
 </div>
 {%endblock%}
