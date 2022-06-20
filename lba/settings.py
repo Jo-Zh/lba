@@ -150,7 +150,7 @@ EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 
 #create log file
-LOG_PATH = 'log/my_service'
+LOG_PATH = 'my_service/log/'
 
 LOGGING = {
     'version': 1,
