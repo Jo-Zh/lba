@@ -1,2 +1,5 @@
 [2022/Jun/20 04:06:08] INFO [signals.py:9] Mei_poster login successful
 [2022/Jun/20 04:06:11] INFO [signals.py:24] Mei_poster log out successful
+[2022/Jun/20 05:28:36] ERROR [signals.py:18] login failed; unknown user
+[2022/Jun/20 05:28:43] ERROR [signals.py:18] login failed; unknown user
+[2022/Jun/20 05:28:53] INFO [signals.py:9] Poster login successful
