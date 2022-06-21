@@ -61,8 +61,9 @@
 
                 {%for note in notes%}
                 <div class="card-body bg-secondary text-light m-2 text-start">
-                    <p>{{note.text}} on </p>
-                    <p class="text-end"><strong>{{note.date | date:"D d M Y"}} {{note.date | time:"H:i"}}</strong></p>
+                    <p>{{note.text}} </p>
+                    <p class="text-end"><strong> on {{note.date | date:"D d M Y"}} {{note.date | time:"H:i"}}</strong>
+                    </p>
                     <a class="card-link text-end text-muted"
                         href="{%url 'note-delete' note.id%}"><strong>Delete</strong>
                     </a>
