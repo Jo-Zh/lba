@@ -38,7 +38,7 @@ class Posts(models.Model):
     set_public=models.BooleanField(default=False)
     
     class Meta:
-        ordering=('-date',)
+        ordering=('-id',)
 
     def __str__(self):
         return self.title

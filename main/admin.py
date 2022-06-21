@@ -10,8 +10,12 @@ class CategoryAdmin(admin.ModelAdmin):
 class CommentsAdmin(admin.ModelAdmin):
     list_display=("id","post","parent","date")
 
+class PostsAdmin(admin.ModelAdmin):
+    list_display=("title", "date", "id")
+    ordering=("-date",)
+
 admin.site.register(User, UserAdmin)
-admin.site.register(Posts)
+admin.site.register(Posts, PostsAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Comments, CommentsAdmin)
 admin.site.register(Notes)
