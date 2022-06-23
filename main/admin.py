@@ -11,7 +11,7 @@ class CommentsAdmin(admin.ModelAdmin):
     list_display=("id","post","parent","date")
 
 class PostsAdmin(admin.ModelAdmin):
-    list_display=("title", "date", "id")
+    list_display=("title", "date", "id", "cover")
     ordering=("-date",)
 
 admin.site.register(User, UserAdmin)
