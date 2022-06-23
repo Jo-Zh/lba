@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'django_static_fontawesome',
     'storages',
+    'decouple',
 ]
 
 MIDDLEWARE = [
