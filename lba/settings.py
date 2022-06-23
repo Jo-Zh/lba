@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
     'my_service.apps.MyServiceConfig',
     'ckeditor',
-    'django_static_fontawesome'
+    'django_static_fontawesome',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -61,7 +62,7 @@ MIDDLEWARE = [
 
 # Simplified static file serving.
 # https://pypi.org/project/whitenoise/
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 ROOT_URLCONF = 'lba.urls'
@@ -136,6 +137,15 @@ STATICFILES_DIRS=[
     
 ]
 
+
+#S3 storage
+AWS_ACCESS_KEY_ID = 'AKIATOSGN4BNUTIVHRQ3'
+AWS_SECRET_ACCESS_KEY = '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'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_STORAGE_BUCKET_NAME = 'lba-001-app-assets'
+AWS_S3_REGION_NAME = 'ap-southeast-2'
+
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
@@ -184,17 +194,18 @@ LOGGING = {
 }
 
 #deploy security setting
-# CORS_REPLACE_HTTPS_REFERER      = True
-# HOST_SCHEME                     = "https://"
-# SECURE_PROXY_SSL_HEADER         = ('HTTP_X_FORWARDED_PROTO', 'https')
-# SECURE_SSL_REDIRECT             = True
-# SESSION_COOKIE_SECURE           = True
-# CSRF_COOKIE_SECURE              = True
-# SECURE_HSTS_INCLUDE_SUBDOMAINS  = True
-# SECURE_HSTS_SECONDS             = 1000000
-# SECURE_FRAME_DENY               = True
+CORS_REPLACE_HTTPS_REFERER      = True
+HOST_SCHEME                     = "https://"
+SECURE_PROXY_SSL_HEADER         = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT             = True
+SESSION_COOKIE_SECURE           = True
+CSRF_COOKIE_SECURE              = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS  = True
+SECURE_HSTS_SECONDS             = 1000000
+SECURE_FRAME_DENY               = True
 
 # Heroku: Update database configuration from $DATABASE_URL.
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
+
