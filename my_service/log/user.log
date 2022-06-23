@@ -9,3 +9,5 @@
 [2022/Jun/21 12:30:55] INFO [signals.py:9] Jo login successful
 [2022/Jun/23 01:49:30] INFO [signals.py:24] Jo log out successful
 [2022/Jun/23 01:49:40] INFO [signals.py:9] Mei_poster login successful
+[2022/Jun/23 05:01:42] ERROR [signals.py:18] login failed; unknown user
+[2022/Jun/23 05:01:53] INFO [signals.py:9] Jo login successful
