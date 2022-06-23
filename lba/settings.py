@@ -23,7 +23,8 @@ MEDIA_URL=('uploads/')
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+# SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY=os.environ.get('SECRET_KEY', '0ok=i$1x&)i5pi83ospr!zl5w50d()9wpe2*&=)k6!p4mvis06') 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'django_static_fontawesome',
     'storages',
+    
    
 ]
 
@@ -141,9 +143,10 @@ STATICFILES_DIRS=[
 
 
 #S3 storage
-
-AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY =config('AWS_SECRET_ACCESS_KEY') 
+AWS_ACCESS_KEY_ID = 'AKIATOSGN4BNS2WMEZEN'
+AWS_SECRET_ACCESS_KEY = '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'
+# AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY =config('AWS_SECRET_ACCESS_KEY') 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 AWS_STORAGE_BUCKET_NAME = 'lba-001-app-assets'
 AWS_S3_REGION_NAME = 'ap-southeast-2'
