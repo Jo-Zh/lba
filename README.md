@@ -42,4 +42,5 @@ SECRET_KEY = 'put your own'```
 <li>Set a real email backend to recovery password</li>
 <li>Registered User email set to unique because of above</li>
 <li>Comments trees created!</li>
+<li>not use decouple to hide password, changed to use environment variables, less plugin...</li>
 </ul>
