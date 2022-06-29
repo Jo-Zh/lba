@@ -35,3 +35,11 @@ There are two tpyes of user upon register: "reader" and "poster".
 AWS_ACCESS_KEY_ID = 'put your own'
 AWS_SECRET_ACCESS_KEY = 'put your own'
 SECRET_KEY = 'put your own'```
+
+## Updated Function:
+
+<ul>
+<li>Set a real email backend to recovery password</li>
+<li>Registered User email set to unique because of above</li>
+<li>Comments trees created!</li>
+</ul>
