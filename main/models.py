@@ -9,6 +9,7 @@ class User(AbstractUser):
     is_reader=models.BooleanField(default=False)
     is_poster=models.BooleanField(default=False)
     avatar=models.ImageField(upload_to='media', null=True, blank=True)
+    email=models.EmailField(unique=True)
    
     def get_absolute_url(self):
         return reverse('userprofile', args=[self.id])
@@ -62,7 +63,7 @@ class CommentManager(models.Manager):
 class Comments(models.Model):
     post=models.ForeignKey(Posts, on_delete=models.CASCADE, related_name='comments_on')
     parent=models.ForeignKey("self", on_delete=models.RESTRICT, null=True, blank=True)
-    name=models.CharField(max_length=155, default='default')
+    name=models.CharField(max_length=155, default='-')
     text=models.TextField(null=True, blank=True)
     date=models.DateTimeField(auto_now_add=True)
  

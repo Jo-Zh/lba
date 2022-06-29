@@ -12,7 +12,10 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 # from decouple import config
-
+with open('/etc/adminMail_lba.txt') as f:
+    USER_01 = f.readline().strip()
+    PASSWORD_01 = f.readline().strip()
+    EMAIL_01 = f.readline().strip()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,9 +26,11 @@ MEDIA_URL=('uploads/')
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = config('SECRET_KEY')
-SECRET_KEY=os.environ.get('SECRET_KEY', '0ok=i$1x&)i5pi83ospr!zl5w50d()9wpe2*&=)k6!p4mvis06') 
 
+# with open('/etc/secret_key_lba.txt') as f:
+#     SECRET_KEY = f.read().strip()
+
+SECRET_KEY=os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 # DJANGO_DEBUG=False
@@ -135,11 +140,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 #S3 storage
-AWS_ACCESS_KEY_ID = 'AKIATOSGN4BNS2WMEZEN'
-AWS_SECRET_ACCESS_KEY = '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'
-
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
 AWS_STORAGE_BUCKET_NAME = 'lba-001-app-assets'
-
 AWS_S3_REGION_NAME = 'ap-southeast-2'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
@@ -161,9 +164,14 @@ LOGIN_REDIRECT_URL='/home'
 LOGOUT_REDIRECT_URL='/accounts/login'
 
 
-# Reset password
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
+# Email BackEND
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = 'smtp.office365.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
 
 #create log file
 LOG_PATH = 'my_service/log/'
@@ -200,15 +208,15 @@ LOGGING = {
 }
 
 #deploy security setting
-CORS_REPLACE_HTTPS_REFERER      = True
-HOST_SCHEME                     = "https://"
-SECURE_PROXY_SSL_HEADER         = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT             = True
-SESSION_COOKIE_SECURE           = True
-CSRF_COOKIE_SECURE              = True
-SECURE_HSTS_INCLUDE_SUBDOMAINS  = True
-SECURE_HSTS_SECONDS             = 1000000
-SECURE_FRAME_DENY               = True
+# CORS_REPLACE_HTTPS_REFERER      = True
+# HOST_SCHEME                     = "https://"
+# SECURE_PROXY_SSL_HEADER         = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_SSL_REDIRECT             = True
+# SESSION_COOKIE_SECURE           = True
+# CSRF_COOKIE_SECURE              = True
+# SECURE_HSTS_INCLUDE_SUBDOMAINS  = True
+# SECURE_HSTS_SECONDS             = 1000000
+# SECURE_FRAME_DENY               = True
 
 # Heroku: Update database configuration from $DATABASE_URL.
 import dj_database_url

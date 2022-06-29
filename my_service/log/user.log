@@ -14,3 +14,29 @@
 [2022/Jun/23 13:19:50] INFO [signals.py:24] Jo log out successful
 [2022/Jun/23 13:19:59] INFO [signals.py:9] Mei_poster login successful
 [2022/Jun/23 13:20:24] INFO [signals.py:9] Jo login successful
+[2022/Jun/28 22:51:19] INFO [signals.py:9] Geo login successful
+[2022/Jun/28 22:51:31] INFO [signals.py:24] Geo log out successful
+[2022/Jun/29 03:16:06] INFO [signals.py:9] Geo login successful
+[2022/Jun/29 03:16:26] INFO [signals.py:9] Jo login successful
+[2022/Jun/29 03:16:37] INFO [signals.py:24] Jo log out successful
+[2022/Jun/29 03:19:15] INFO [signals.py:9] Geo login successful
+[2022/Jun/29 03:19:21] INFO [signals.py:24] Geo log out successful
+[2022/Jun/29 04:58:30] INFO [signals.py:9] Geo login successful
+[2022/Jun/29 04:58:37] INFO [signals.py:24] Geo log out successful
+[2022/Jun/29 05:02:29] INFO [signals.py:9] Mei_poster login successful
+[2022/Jun/29 05:47:42] INFO [signals.py:24] Mei_poster log out successful
+[2022/Jun/29 06:19:11] INFO [signals.py:9] Mei_poster login successful
+[2022/Jun/29 06:39:55] INFO [signals.py:9] Jo login successful
+[2022/Jun/29 06:47:03] INFO [signals.py:24] Jo log out successful
+[2022/Jun/29 06:49:53] INFO [signals.py:9] Jo login successful
+[2022/Jun/29 06:53:06] INFO [signals.py:24] Jo log out successful
+[2022/Jun/29 06:53:19] INFO [signals.py:9] Mei_poster login successful
+[2022/Jun/29 06:54:33] INFO [signals.py:9] Jo login successful
+[2022/Jun/29 06:55:02] INFO [signals.py:24] Jo log out successful
+[2022/Jun/29 08:48:20] INFO [signals.py:9] Jo login successful
+[2022/Jun/29 08:48:36] INFO [signals.py:24] Jo log out successful
+[2022/Jun/29 08:56:41] INFO [signals.py:9] Jo login successful
+[2022/Jun/29 08:56:56] INFO [signals.py:24] Jo log out successful
+[2022/Jun/29 09:00:52] INFO [signals.py:9] Jo login successful
+[2022/Jun/29 10:00:39] INFO [signals.py:24] Jo log out successful
+[2022/Jun/29 10:19:49] INFO [signals.py:9] Jo login successful

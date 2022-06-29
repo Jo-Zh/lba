@@ -102,48 +102,10 @@
     </div>
 
     <div>
-        {% for comment in comments %}
-        <blockquote class="blockquote">
-            <p class="lead">{{comment.text}}</p>
-            <footer class="blockquote-footer">via {{comment.name}} | {{comment.date|timesince}} ago
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingTwo">
-                        <button class="accordion-button collapsed text-dark" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                            <i class="bi bi-reply"></i>Reply
-                        </button>
-                    </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                        data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
-                            <form method="POST" class="d-flex flex-column h-50 pb-5">
-                                {%csrf_token%}
-                                {{ form.as_table}}
-                                <input type="hidden" name="parent_id" value="{{comment.id}}">
-                                <input type="submit" value="reply" name="reply">
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-            {%for child_comment in comment.children%}
-            <blockquote class="blockquote" style="text-indent: 50px;">
-                <p class="lead">{{child_comment.text}}</p>
-                <footer class="blockquote-footer">via {{child_comment.name}} | {{child_comment.date|timesince}} ago |
-                    <!-- <div class="dropdown d-inline-block">
-                        <a class="card-link text-muted" href="#" role="button" id="dropdownMenuLink"
-                            data-bs-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Reply:
-                        </a>
-                    </div> -->
-                </footer>
-            </blockquote>
-            {%endfor%}
 
-        </blockquote>
-        {%empty%}
-        No Comments at now...
+        {%for comment in comments%}
+        {%include "main/comment_item.html"%}
         {%endfor%}
-
 
     </div>
 </div>

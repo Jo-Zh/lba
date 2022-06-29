@@ -1,0 +1,25 @@
+<li class="blockquote">
+    <p class="lead">{{comment.text}}</p>
+    <footer class="blockquote-footer">via {{comment.name}} | {{comment.date|timesince}} ago
+        <div class="row">
+
+            <form method="POST" class="col-sm-4 d-flex flex-column">
+                {%csrf_token%}
+                {{ form.as_table}}
+                <input type="hidden" name="parent_id" value="{{comment.id}}">
+                <input type="submit" value="reply" name="reply">
+            </form>
+        </div>
+
+    </footer>
+    {%if comment.children|length%}
+    <ul>
+        {% for ch in comment.children %}
+        {% with comment=ch template_name="main/comment_item.html" %}
+        {% include template_name %}
+        {%endwith%}
+        {%endfor%}
+
+    </ul>
+    {%endif%}
+</li>

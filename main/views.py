@@ -162,15 +162,16 @@ def article_detail(req, id):
     if req.user.is_authenticated:
         user_note=Notes.objects.filter(name=req.user)
         this_note=user_note.filter(post=current_post)
-    #logic
-    #show post status of add_like
+    
+    #Different requests 
+    # 1) show post status of add_like
     if req.user not in current_post.reader.all():
         fav=False
     else:
         fav=True
-    #Form Handling
+    #2) Form submitting
     if req.method=='POST':
-        #Add Note
+        #a) Add Note form
         if 'note' in req.POST:
             text=req.POST.get("note_new")
             tag=req.POST.get("note_tag")
@@ -181,21 +182,22 @@ def article_detail(req, id):
                 return redirect(req.META['HTTP_REFERER'])
             else:
                 return redirect(req.META['HTTP_REFERER'])
-        #Add comment
+        #b) Add comment
         if 'comment' in req.POST:
             #Returns a callable view that takes a request and returns a response
             Comments_view.as_view()(req, pk=id)        
-        # Add replied Comment
+        #c) Add replied Comment
         if 'reply' in req.POST:
             comment_form=Comments_Form(req.POST)
             if comment_form.is_valid():
                instance_comment=comment_form.save(commit=False)
                instance_comment.parent_id=int(req.POST.get("parent_id"))
+               print(instance_comment.parent_id)
                instance_comment.post_id=id
                instance_comment.save()
                return redirect(req.META['HTTP_REFERER'])
             else:
-                return redirect(req.META['HTTP_REFERER'])       
+                return redirect(req.META['HTTP_REFERER'])        
     return render(req, 'main/detail.html', {'post':current_post, 'fav':fav, 'num':num, 'comments':comments_on, 'notes':this_note, 'comment_form':Comments_Form, 'form':Comments_Form})
 
 
@@ -217,7 +219,6 @@ class PostUpdateView(UpdateView):
     template_name= 'main/update-posts.html'
 
 
-#About notes and comments
 
 def note_delete(req, id):
     current_note=get_object_or_404(Notes, pk=id)
