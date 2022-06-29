@@ -19,6 +19,7 @@ urlpatterns=[
     path('home/favor/<int:id>', views.add_favorite, name='addfavor'),
     path('post-delete/<int:id>/', views.post_delete, name='delete-post'),
 
-    path('note-delete/<int:id>/', views.note_delete, name='note-delete')
+    path('note-delete/<int:id>/', views.note_delete, name='note-delete'),
+    path('comment-delete/<int:id>/', views.comment_delete, name='comment-delete')
  
 ]

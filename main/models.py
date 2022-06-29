@@ -62,7 +62,7 @@ class CommentManager(models.Manager):
 
 class Comments(models.Model):
     post=models.ForeignKey(Posts, on_delete=models.CASCADE, related_name='comments_on')
-    parent=models.ForeignKey("self", on_delete=models.RESTRICT, null=True, blank=True)
+    parent=models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
     name=models.CharField(max_length=155, default='-')
     text=models.TextField(null=True, blank=True)
     date=models.DateTimeField(auto_now_add=True)

@@ -237,3 +237,9 @@ class Comments_view(CreateView):
         except:
             form.instance.parent_id=None
         return super().form_valid(form)
+
+@login_required(login_url="/accounts/login")
+def comment_delete(req, id):
+    current_comment=get_object_or_404(Comments, pk=id)
+    current_comment.delete()
+    return redirect(req.META['HTTP_REFERER'])

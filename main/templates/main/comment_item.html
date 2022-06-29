@@ -1,6 +1,7 @@
 <li class="blockquote">
     <p class="lead">{{comment.text}}</p>
     <footer class="blockquote-footer">via {{comment.name}} | {{comment.date|timesince}} ago
+        <a class="card-link " href="{%url 'comment-delete' comment.id %}" class="card-link"><small>Delete</small></a>
         <div class="row">
 
             <form method="POST" class="col-sm-4 d-flex flex-column">
