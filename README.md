@@ -28,13 +28,16 @@ There are two tpyes of user upon register: "reader" and "poster".
 - ckeditor<br>
 - django_static_fontawesome<br>
 - django-storages<br>
-- python-decouple<br>
 
-<p>Then create the root file name ".env-example" to ".env", and create the following code lines:</p>
+<p> The sensitive data will be imported from your enviroment file. For example: for secret key, I wrote:
 ```
-AWS_ACCESS_KEY_ID = 'put your own'
-AWS_SECRET_ACCESS_KEY = 'put your own'
-SECRET_KEY = 'put your own'```
+export SECREST_KEY="your key"
+```
+in my python virtual environment activate file: venv/bin/activate. And in settings.py to import value with:
+
+```
+SECRET_KEY = os.environ.get("SECRET_KEY")
+``
 
 ## Updated Function:
 
