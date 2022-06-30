@@ -20,6 +20,6 @@ urlpatterns=[
     path('post-delete/<int:id>/', views.post_delete, name='delete-post'),
 
     path('note-delete/<int:id>/', views.note_delete, name='note-delete'),
-    path('comment-delete/<int:pk>/', views.Comment_delete_view.as_view(), name='comment-delete')
+   
  
 ]

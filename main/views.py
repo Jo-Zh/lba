@@ -6,22 +6,9 @@ from .models import User, Posts, Category, Comments, Notes
 from django.forms import modelform_factory
 from django.contrib import messages
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
-from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator 
-from django.http import HttpResponseForbidden #import the HttpResponseForbidden page
+
 
 # Create your views here.
-
-class OwnerProtectMixin(object):
-    def dispatch(self, request, *args, **kwargs):
-        objectUser = self.get_object()
-        try:
-            if objectUser.name != self.request.user:
-                return HttpResponseForbidden()
-        except:
-            if objectUser.user != self.request.user:
-                return HttpResponseForbidden() 
-        return super(OwnerProtectMixin, self).dispatch(request, *args, **kwargs)
 
 def home(req, slug=None):
     category=None
@@ -203,12 +190,14 @@ def article_detail(req, id):
         #c) Add replied Comment
         if 'reply' in req.POST:
             Comments_view.as_view()(req, pk=id)
-        # if 'delete' in req.POST:
-        #     id_delete=int(req.POST.get("delete_id"))
-        #     current_comment=Comments.objects.filter(id=id_delete)
-        #     print(current_comment)
-        #     current_comment.delete()
-        #     print('delete')
+        #d) Delete a Comment and childComment
+        if 'delete' in req.POST:
+            id_delete=int(req.POST.get("delete_id"))
+            current_comment=Comments.objects.filter(id=id_delete)
+            if req.user.is_authenticated and current_comment[0].name==req.user:
+                print(current_comment)
+                current_comment[0].delete()
+                print('delete')
                   
     return render(req, 'main/detail.html', {'post':current_post, 'fav':fav, 'num':num, 'comments':comments_on, 'notes':this_note,  'form':Comments_Form}) #'comment_form':Comments_Form,
 
@@ -255,10 +244,5 @@ class Comments_view(CreateView):
         return super().form_valid(form)
 
 
-@method_decorator(login_required,name='dispatch' )#
-class Comment_delete_view(OwnerProtectMixin, DeleteView):
-    model=Comments
-    form_class=Comments_Form
-    template_name="main/comments_confirm_delete.html"
-    success_url="/"
+
 
