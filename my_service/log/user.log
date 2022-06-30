@@ -41,3 +41,14 @@
 [2022/Jun/29 10:00:39] INFO [signals.py:24] Jo log out successful
 [2022/Jun/29 10:19:49] INFO [signals.py:9] Jo login successful
 [2022/Jun/29 22:18:22] INFO [signals.py:24] Jo log out successful
+[2022/Jun/29 23:02:31] INFO [signals.py:9] Jo login successful
+[2022/Jun/29 23:04:09] INFO [signals.py:24] Jo log out successful
+[2022/Jun/29 23:10:27] INFO [signals.py:9] Mei_poster login successful
+[2022/Jun/30 01:48:58] INFO [signals.py:24] Mei_poster log out successful
+[2022/Jun/30 01:56:17] INFO [signals.py:9] Mei_poster login successful
+[2022/Jun/30 02:19:38] INFO [signals.py:9] Jo login successful
+[2022/Jun/30 02:36:58] INFO [signals.py:24] Jo log out successful
+[2022/Jun/30 02:37:04] INFO [signals.py:9] Mei_poster login successful
+[2022/Jun/30 03:21:09] INFO [signals.py:9] Jo login successful
+[2022/Jun/30 03:27:35] INFO [signals.py:24] Jo log out successful
+[2022/Jun/30 03:27:42] INFO [signals.py:9] Mei_poster login successful

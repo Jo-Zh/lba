@@ -5,9 +5,23 @@ from django.contrib.auth import login, logout, authenticate
 from .models import User, Posts, Category, Comments, Notes
 from django.forms import modelform_factory
 from django.contrib import messages
-from django.views.generic.edit import UpdateView, CreateView
+from django.views.generic.edit import UpdateView, CreateView, DeleteView
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator 
+from django.http import HttpResponseForbidden #import the HttpResponseForbidden page
 
 # Create your views here.
+
+class OwnerProtectMixin(object):
+    def dispatch(self, request, *args, **kwargs):
+        objectUser = self.get_object()
+        try:
+            if objectUser.name != self.request.user:
+                return HttpResponseForbidden()
+        except:
+            if objectUser.user != self.request.user:
+                return HttpResponseForbidden() 
+        return super(OwnerProtectMixin, self).dispatch(request, *args, **kwargs)
 
 def home(req, slug=None):
     category=None
@@ -188,17 +202,15 @@ def article_detail(req, id):
             Comments_view.as_view()(req, pk=id)        
         #c) Add replied Comment
         if 'reply' in req.POST:
-            comment_form=Comments_Form(req.POST)
-            if comment_form.is_valid():
-               instance_comment=comment_form.save(commit=False)
-               instance_comment.parent_id=int(req.POST.get("parent_id"))
-               print(instance_comment.parent_id)
-               instance_comment.post_id=id
-               instance_comment.save()
-               return redirect(req.META['HTTP_REFERER'])
-            else:
-                return redirect(req.META['HTTP_REFERER'])        
-    return render(req, 'main/detail.html', {'post':current_post, 'fav':fav, 'num':num, 'comments':comments_on, 'notes':this_note, 'comment_form':Comments_Form, 'form':Comments_Form})
+            Comments_view.as_view()(req, pk=id)
+        # if 'delete' in req.POST:
+        #     id_delete=int(req.POST.get("delete_id"))
+        #     current_comment=Comments.objects.filter(id=id_delete)
+        #     print(current_comment)
+        #     current_comment.delete()
+        #     print('delete')
+                  
+    return render(req, 'main/detail.html', {'post':current_post, 'fav':fav, 'num':num, 'comments':comments_on, 'notes':this_note,  'form':Comments_Form}) #'comment_form':Comments_Form,
 
 
 def article_status(req, id):
@@ -232,14 +244,21 @@ class Comments_view(CreateView):
 
     def form_valid(self, form):
         form.instance.post_id=self.kwargs['pk']
+        if self.request.user.is_authenticated:
+            form.instance.name=self.request.user
+        else:
+            form.instance.name=None
         try:
-            form.instance.parent_id=self.kwargs['parent_id']
+            form.instance.parent_id=self.request.POST.get("parent_id")
         except:
             form.instance.parent_id=None
         return super().form_valid(form)
 
-@login_required(login_url="/accounts/login")
-def comment_delete(req, id):
-    current_comment=get_object_or_404(Comments, pk=id)
-    current_comment.delete()
-    return redirect(req.META['HTTP_REFERER'])
+
+@method_decorator(login_required,name='dispatch' )#
+class Comment_delete_view(OwnerProtectMixin, DeleteView):
+    model=Comments
+    form_class=Comments_Form
+    template_name="main/comments_confirm_delete.html"
+    success_url="/"
+

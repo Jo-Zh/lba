@@ -1,7 +1,15 @@
 <li class="blockquote">
     <p class="lead">{{comment.text}}</p>
     <footer class="blockquote-footer">via {{comment.name}} | {{comment.date|timesince}} ago
-        <a class="card-link " href="{%url 'comment-delete' comment.id %}" class="card-link"><small>Delete</small></a>
+        {% if request.user == comment.name %}
+
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="delete_id" value="{{comment.id}}">
+            <input type="submit" name="delete" value="delete">
+        </form>
+
+        {% endif %}
         <div class="row">
 
             <form method="POST" class="col-sm-4 d-flex flex-column">

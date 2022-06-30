@@ -29,7 +29,23 @@ class Poster_Register_Form(Register_Form):
 
 
 class Comments_Form(forms.ModelForm):
-    name=forms.CharField(max_length=32, help_text='(your name here)')
+    # name=forms.ForeignField(max_length=32, help_text='(your name here)', required=False)
     class Meta:
         model= Comments
-        fields= ['name', 'text']
+        fields= ['text']
+    
+    
+    def delete(self, *args, **kwargs):
+        comment = Comments.objects.filter(id=self.pk)
+        comment.delete()
+        print('deleted!')
+
+    # def save(self, *args, **kwargs):
+    #     comment=super().save(commit=False)
+    #     if comment.name.is_authenticated:
+    #         comment.save()
+    #     else:
+    #         comment.name=null
+    #         comment.save()        
+    #     return comment
+   
