@@ -10,8 +10,9 @@
         </form>
 
         {% endif %}
-        <a class="not-exist" value="{{comment.id}}" onclick="myFunc(event)" href="#">Test A tag</a>
-        <div class="row" id="{{comment.id}}" style="display:none;">this is selected form
+        <a class="not-exist" value="{{comment.id}}" onclick="myFunc(event)" href="#"><i
+                class="bi bi-reply-fill"></i>reply</a>
+        <div class="row" id="{{comment.id}}" style="display:none;">
 
             <form method="POST" class="col-sm-4 d-flex flex-column">
                 {%csrf_token%}
@@ -36,11 +37,6 @@
 
 <script type="text/javascript">
 
-
-    // let select_a = document.querySelectorAll(".not-exist")
-
-    // select_a.forEach((a) => {
-
     function myFunc(event) {
         event.preventDefault();
         let value = event.target.getAttribute('value')
@@ -52,9 +48,4 @@
         }
 
     }
-    // }
-    // )
-
-
-
 </script>
