@@ -56,3 +56,6 @@
 [2022/Jun/30 06:46:34] INFO [signals.py:9] Mei_poster login successful
 [2022/Jun/30 07:16:10] INFO [signals.py:9] Jo login successful
 [2022/Jun/30 07:16:17] INFO [signals.py:24] Jo log out successful
+[2022/Jul/02 09:12:35] INFO [signals.py:9] testtoday login successful
+[2022/Jul/02 09:13:22] INFO [signals.py:9] Jo login successful
+[2022/Jul/02 09:14:09] INFO [signals.py:24] Jo log out successful
