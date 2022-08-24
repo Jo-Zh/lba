@@ -1,19 +1,22 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from .forms import Reader_Register_Form, Poster_Register_Form, Comments_Form
+from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login, logout, authenticate
-from .models import User, Posts, Category, Comments, Notes
-from django.forms import modelform_factory
 from django.contrib import messages
+from django.contrib.auth import login, logout, authenticate
+from django.forms import modelform_factory
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 
+from .forms import Reader_Register_Form, Poster_Register_Form, Comments_Form
+from .models import User, Posts, Category, Comments, Notes
 
-# Create your views here.
 
+# Create your views here
+#Homepage ##################################################################
 def home(req, slug=None):
     category=None
     categories=Category.objects.all()
     current_posts_all=Posts.objects.all()
+    
 
     if slug:
         category=get_object_or_404(Category, slug=slug)
@@ -25,17 +28,22 @@ def home(req, slug=None):
         field=req.POST.get('field')
         if field=='title':
             result=Posts.objects.filter(title__contains=search)
-        elif field=='description':
-            result=Posts.objects.filter(description__contains=search)
+        elif field=='content':
+            result=Posts.objects.filter(content__contains=search)
         else:
             result=Posts.objects.filter(creater__username__icontains=search)
         posts_all=result
     else:
-        posts_all=current_posts_all     
-    return render(req, 'main/home.html', {'posts':posts_all, 'categories':categories, 'category':category})
+        posts_all=current_posts_all 
+
+    paginator = Paginator(posts_all, 6) # Show 25 contacts per page.
+    page_number = req.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    #return render(request, 'list.html', {'page_obj': page_obj})'posts':posts_all,
+    return render(req, 'main/home.html', {'posts': page_obj, 'categories':categories, 'category':category, 'page_obj': page_obj})
 
 
-#About Accounts
+#About Accounts ######################################################################3
 
 def sign_up_reader(req):
     if req.method=='POST':
@@ -110,7 +118,7 @@ def user_delete(req, id):
     return redirect("/")
 
 
-# About Posts 
+# About Posts ############################################################################
 
 PostForm=modelform_factory(Posts, exclude=["creater", "reader", "date","add_like", "set_public"])
 @login_required(login_url="/login")
