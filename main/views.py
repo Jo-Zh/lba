@@ -36,10 +36,9 @@ def home(req, slug=None):
     else:
         posts_all=current_posts_all 
 
-    paginator = Paginator(posts_all, 6) # Show 25 contacts per page.
+    paginator = Paginator(posts_all, 6) #6 contacts per page.
     page_number = req.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    #return render(request, 'list.html', {'page_obj': page_obj})'posts':posts_all,
     return render(req, 'main/home.html', {'posts': page_obj, 'categories':categories, 'category':category, 'page_obj': page_obj})
 
 
