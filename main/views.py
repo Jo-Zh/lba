@@ -17,7 +17,7 @@ def home(req, slug=None):
     categories=Category.objects.all()
     current_posts_all=Posts.objects.all()
     
-
+   
     if slug:
         category=get_object_or_404(Category, slug=slug)
         current_posts_all=Posts.objects.filter(category=category)

@@ -102,6 +102,49 @@
 
     </div>
 </div>
+<div class="row responsive-width">
+    <hr>
+    <h5 class="mx-5 text-center">Site Statistic</h5>
+    <canvas id="myChart" class="card mx-5 h-25"></canvas>
+    <script type="text/javascript">
+        $(function () {
+
+            var $Chart_Like = $("#myChart");
+            $.ajax({
+                url: $Chart_Like.data("url"),
+                success: function (data) {
+
+                    var ctx = $Chart_Like[0].getContext("2d");
+
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: [{%for post in posts %} '{{post.title}}', {% endfor %}],
+                datasets: [{
+                    label: 'add_like times',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    data: [{%for post in posts %} '{{post.add_like}}', {% endfor %}]
+        }]          
+      },
+            options: {
+            responsive: true,
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Posts-FavoriteNum'
+            }
+        }
+    });
+
+  }
+});
+
+});
+
+    </script>
+</div>
 <script>
     document.onreadystatechange = function () {
         if (document.readyState !== "complete") {
