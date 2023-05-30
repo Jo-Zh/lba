@@ -61,3 +61,5 @@
 [2022/Jul/02 09:14:09] INFO [signals.py:24] Jo log out successful
 [2022/Aug/10 00:41:25] INFO [signals.py:9] Jo login successful
 [2022/Aug/10 00:41:34] INFO [signals.py:24] Jo log out successful
+[2023/May/30 07:39:53] INFO [signals.py:9] test login successful
+[2023/May/30 08:49:29] INFO [signals.py:24] test log out successful
