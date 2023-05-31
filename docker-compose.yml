@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: django_dockerfile
+      args:
+        - AWS_ACCESS_KEY_ID
+        - AWS_SECRET_ACCESS_KEY
+    volumes:
+      - .:/app
+    ports:
+      - "8010:8010"
+    env_file:
+      - ./.env
+
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx_dockerfile
+    ports:
+      - "8020:8020"
+    depends_on:
+      - django

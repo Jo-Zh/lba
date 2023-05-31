@@ -1,0 +1,22 @@
+# django_dockerfile
+FROM python:3.10-buster
+
+ARG AWS_ACCESS_KEY_ID
+ARG AWS_SECRET_ACCESS_KEY
+ENV AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+ENV AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+
+# copy source and install dependencies
+RUN mkdir -p /opt/app
+RUN mkdir -p /opt/app/staticfiles/
+COPY requirements.txt /opt/app/
+WORKDIR /opt/app
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+RUN /opt/venv/bin/python -m pip install --upgrade pip
+RUN pip install -r requirements.txt
+COPY . /opt/app/
+RUN python manage.py collectstatic --noinput
+# start server
+EXPOSE 8010
+CMD ["gunicorn", "--bind", "0.0.0.0:8010", "lba.wsgi:application"]
