@@ -16,7 +16,10 @@ ENV PATH="/opt/venv/bin:$PATH"
 RUN /opt/venv/bin/python -m pip install --upgrade pip
 RUN pip install -r requirements.txt
 COPY . /opt/app/
-RUN python manage.py collectstatic --noinput
+RUN mkdir -p /opt/app/my_service/log/
+RUN chown -R 1000:1000 /opt/app/my_service/log/
+RUN mkdir -p /app && chown -R 1000:1000 /app
+#RUN python manage.py collectstatic --noinput
 # start server
 EXPOSE 8010
 CMD ["gunicorn", "--bind", "0.0.0.0:8010", "lba.wsgi:application"]
